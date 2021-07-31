@@ -1,11 +1,18 @@
 <template>
   <div>
-    <h1>Your coordinates</h1>
-    <p>{{ coordinates.lat }} latitude, {{ coordinates.lng }} longitude</p>
+    <div style="display: flex; align-items:center; justify-content: center">
+      <div>
+        <h1>Your coordinates</h1>
+        <p>
+          {{ myCoordinates.lat }} latitude, {{ myCoordinates.lng }} longitude
+        </p>
+      </div>
+    </div>
+
     <GmapMap
-      :center="{ lat: 10, lng: 10 }"
+      :center="myCoordinates"
       :zoom="7"
-      style="width: 640px; height: 360px"
+      style="width: 640px; height: 360px;margin:32px auto"
     >
     </GmapMap>
   </div>
@@ -14,7 +21,11 @@
 export default {
   data() {
     return {
-      coordinates: {
+      myCoordinates: {
+        lat: 0,
+        lng: 0,
+      },
+      mapCoordinates: {
         lat: 0,
         lng: 0,
       },
@@ -22,8 +33,8 @@ export default {
   },
   created() {
     this.$getLocation({})
-      .then((coordinates) => {
-        this.coordinates = coordinates;
+      .then((myCoordinates) => {
+        this.myCoordinates = myCoordinates;
       })
       .catch((error) => {
         alert(error);
